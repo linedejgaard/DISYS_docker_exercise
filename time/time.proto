@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package time;
+option go_package = "https://github.itu.dk/ldej/DISYS-week5;time";
+
+
+message GetTimeRequest{}
+message GetTimeReply {
+    string reply = 1;
+}
+
+service getCurrentTime {
+    rpc getTime (GetTimeRequest) returns (GetTimeReply) {}
+}
