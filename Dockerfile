@@ -1,18 +1,18 @@
-FROM --platform=${BUILDPLATFORM} golang:1.14.3-alpine AS build
-WORKDIR /src
-ENV CGO_ENABLED=0
-COPY . .
-ARG TARGETOS
-ARG TARGETARCH
-RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /out/example .
+FROM golang:latest
 
-FROM scratch AS bin-unix
-COPY --from=build /out/example /
+RUN mkdir/build
+WORKDIR /build
 
-FROM bin-unix AS bin-linux
-FROM bin-unix AS bin-windows
+RUN export GO111MODULE=on
 
-FROM scratch AS bin-darwin
-COPY --from=build /out/example /example.exe
+COPY go.mod /build
+COPY go.sum /build/
 
-FROM bin-${TARGETOS} AS bin
+RUN cd /build/ && git clone https://github.com/linedejgaard/DISYS_docker_exercise.git
+RUN cd /build/DISYS_docker_exercise/server && go build ./...
+
+EXPOSE 9080
+
+ENTRYPOINT [ "/build/DISYS_docker_exercise/server/server" ]
+
+

@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package time;
-option go_package = "https://github.itu.dk/ldej/DISYS-week5;time";
+option go_package = "https://github.com/linedejgaard/DISYS_docker_exercise;time";
 
 
 message GetTimeRequest{}
